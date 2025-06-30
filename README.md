@@ -32,7 +32,7 @@ No installation is necessary. Simply open the HTML file in your browser.
 If you are cloning the repository, make sure the structure is maintained:
 
 ```bash
-git clone https://github.com/pranavvadhel/PRODIGY_WD_02.git
+git clone https://github.com/rutanshubhayani/PRODIGY_WD_02.git
 ```
 
 ## 💻 How to Run
