@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stopwatch App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #display {
+      font-size: 48px;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .buttons {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #444;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #666;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      width: 200px;
+    }
+
+    li {
+      background: #222;
+      padding: 5px 10px;
+      border-bottom: 1px solid #333;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Stopwatch</h1>
+  <div id="display">00:00:00.00</div>
+  <div class="buttons">
+    <button onclick="startStop()">Start</button>
+    <button onclick="pause()">Pause</button>
+    <button onclick="reset()">Reset</button>
+    <button onclick="lap()">Lap</button>
+  </div>
+  <ul id="laps"></ul>
+
+  <script>
+    let timer;
+    let running = false;
+    let startTime;
+    let elapsedTime = 0;
+
+    function updateDisplay() {
+      const total = Date.now() - startTime + elapsedTime;
+      const hours = Math.floor(total / 3600000);
+      const minutes = Math.floor((total % 3600000) / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const milliseconds = Math.floor((total % 1000) / 10); // two-digit milliseconds
+
+      document.getElementById('display').textContent =
+        `${String(hours).padStart(2, '0')}:` +
+        `${String(minutes).padStart(2, '0')}:` +
+        `${String(seconds).padStart(2, '0')}.` +
+        `${String(milliseconds).padStart(2, '0')}`;
+    }
+
+    function startStop() {
+      if (!running) {
+        running = true;
+        startTime = Date.now();
+        timer = setInterval(updateDisplay, 10);
+      }
+    }
+
+    function pause() {
+      if (running) {
+        running = false;
+        elapsedTime += Date.now() - startTime;
+        clearInterval(timer);
+      }
+    }
+
+    function reset() {
+      running = false;
+      clearInterval(timer);
+      startTime = null;
+      elapsedTime = 0;
+      document.getElementById('display').textContent = '00:00:00.00';
+      document.getElementById('laps').innerHTML = '';
+    }
+
+    function lap() {
+      if (running) {
+        const lapTime = document.getElementById('display').textContent;
+        const li = document.createElement('li');
+        li.textContent = `Lap ${document.getElementById('laps').children.length + 1}: ${lapTime}`;
+        document.getElementById('laps').appendChild(li);
+      }
+    }
+  </script>
+
+</body>
+</html>
