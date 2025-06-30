@@ -40,7 +40,7 @@ git clone https://github.com/rutanshubhayani/PRODIGY_WD_02.git
 
 Open stopwatch.html in any modern web browser:
 ```bash
-start stopwatch.html
+start Stopwatch.html
 ```
 
 ## 📷 Screenshots
